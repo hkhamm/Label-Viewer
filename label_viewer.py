@@ -43,7 +43,7 @@ class MainPanel(LabelViewerPanel):
 
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(bitmap0, 0, wx.ALL)
+        sizer.Add(bitmap0, 0, wx.EXPAND)
         self.SetSizer(sizer)
 
         self.set_cursor()
@@ -73,7 +73,7 @@ class ObjectPanel(LabelViewerPanel):
 
         # Layout
         sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(bitmap0, 0, wx.ALL)
+        sizer.Add(bitmap0, 0, wx.EXPAND)
         self.SetSizer(sizer)
 
         self.set_cursor()
@@ -95,6 +95,7 @@ class MainFrame(wx.Frame):
     def __init__(self, parent, image_size):
         wx.Frame.__init__(self, parent, wx.ID_ANY, size=image_size)
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
+        self.BackgroundColour = wx.BLACK
 
         self.main_panel = MainPanel(self, -1, image_size)
         object1_panel = ObjectPanel(self, 0, image_size)
@@ -120,5 +121,5 @@ class MainFrame(wx.Frame):
 
 if __name__ == '__main__':
     app = wx.App(False)
-    MainFrame(None, (1280, 720)).Show()
+    MainFrame(None, (1920, 1080)).Show()
     app.MainLoop()
