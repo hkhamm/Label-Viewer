@@ -13,7 +13,6 @@ class LabelViewerPanel(wx.Panel):
         self.panel_id = panel_id
         self.Bind(wx.EVT_CHAR, self.on_keypress)
         self.cursor = wx.StockCursor(wx.CURSOR_BLANK)
-        self.BackgroundColour = wx.BLACK
         self.widgets = []
 
     def set_cursor(self):
@@ -35,11 +34,6 @@ class MainPanel(LabelViewerPanel):
         LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
 
         # Widgets
-        # background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
-        # background = wx.StaticBitmap(self, id=0, bitmap=background_bmp)
-        # self.widgets.append(background)
-        # self.add_widget(background)
-
         img = './images/shelf/duiker_hoof_necklace.png'
         hoof_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
         hoof_necklace = wx.StaticBitmap(self, id=0, pos=(430, 50),
@@ -199,6 +193,9 @@ class MainFrame(wx.Frame):
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
         self.Bind(wx.EVT_CHAR, self.on_keypress)
+
+        background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
+        wx.StaticBitmap(self, id=0, bitmap=background_bmp)
 
         self.main_panel = MainPanel(self, -1, image_size)
         object1_panel = ObjectPanel(self, 0, image_size)
