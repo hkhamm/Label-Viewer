@@ -35,13 +35,13 @@ class MainPanel(LabelViewerPanel):
         LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
 
         # Widgets
-        background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
-        background = wx.StaticBitmap(self, id=0, bitmap=background_bmp)
-        self.widgets.append(background)
+        # background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
+        # background = wx.StaticBitmap(self, id=0, bitmap=background_bmp)
+        # self.widgets.append(background)
+        # self.add_widget(background)
 
-        # TODO add more widgets here
-        img0 = './images/shelf/duiker_hoof_necklace.png'
-        hoof_necklace_bmp = wx.Bitmap(img0, wx.BITMAP_TYPE_PNG)
+        img = './images/shelf/duiker_hoof_necklace.png'
+        hoof_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
         hoof_necklace = wx.StaticBitmap(self, id=0, pos=(430, 50),
                                         bitmap=hoof_necklace_bmp)
         self.add_widget(hoof_necklace)
@@ -148,6 +148,7 @@ class MainPanel(LabelViewerPanel):
         # self.SetSizer(main_sizer)
 
         self.set_cursor()
+        self.SetFocus()
 
     def add_widget(self, widget):
         widget.Bind(wx.EVT_LEFT_DOWN, self.switch_panel)
@@ -197,6 +198,7 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, parent, wx.ID_ANY, size=image_size)
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
+        self.Bind(wx.EVT_CHAR, self.on_keypress)
 
         self.main_panel = MainPanel(self, -1, image_size)
         object1_panel = ObjectPanel(self, 0, image_size)
@@ -215,6 +217,11 @@ class MainFrame(wx.Frame):
             self.panels[index].Hide()
             self.main_panel.SetFocus()
         self.Layout()
+
+    def on_keypress(self, event):
+        keycode = event.GetKeyCode()
+        if keycode == wx.WXK_ESCAPE:
+            self.frame.close()
 
     def close(self):
         self.Destroy()
