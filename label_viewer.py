@@ -13,7 +13,11 @@ class LabelViewerPanel(wx.Panel):
         self.panel_id = panel_id
         self.Bind(wx.EVT_CHAR, self.on_keypress)
         self.cursor = wx.StockCursor(wx.CURSOR_BLANK)
+        self.BackgroundColour = wx.BLACK
         self.widgets = []
+
+        #background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
+        #wx.StaticBitmap(self, id=0, bitmap=background_bmp)
 
     def set_cursor(self):
         for widget in self.widgets:
@@ -192,9 +196,6 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, parent, wx.ID_ANY, size=image_size)
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
-
-        background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
-        wx.StaticBitmap(self, id=0, bitmap=background_bmp)
 
         self.main_panel = MainPanel(self, -1, image_size)
         object1_panel = ObjectPanel(self, 0, image_size)
