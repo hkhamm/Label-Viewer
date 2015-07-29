@@ -192,7 +192,6 @@ class MainFrame(wx.Frame):
         wx.Frame.__init__(self, parent, wx.ID_ANY, size=image_size)
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
-        self.Bind(wx.EVT_CHAR, self.on_keypress)
 
         background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
         wx.StaticBitmap(self, id=0, bitmap=background_bmp)
@@ -214,11 +213,6 @@ class MainFrame(wx.Frame):
             self.panels[index].Hide()
             self.main_panel.SetFocus()
         self.Layout()
-
-    def on_keypress(self, event):
-        keycode = event.GetKeyCode()
-        if keycode == wx.WXK_ESCAPE:
-            self.frame.close()
 
     def close(self):
         self.Destroy()
