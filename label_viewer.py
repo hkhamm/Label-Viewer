@@ -88,6 +88,60 @@ class MainPanel(LabelViewerPanel):
                                          bitmap=stone_necklace_bmp)
         self.add_widget(stone_necklace)
 
+        img = './images/shelf/ivory_necklace.png'
+        ivory_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        ivory_necklace = wx.StaticBitmap(self, id=0, pos=(435, 530),
+                                         bitmap=ivory_necklace_bmp)
+        self.add_widget(ivory_necklace)
+
+        img = './images/shelf/wood_prayer_beads.png'
+        wood_prayer_beads_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        wood_prayer_beads = wx.StaticBitmap(self, id=0, pos=(670, 530),
+                                            bitmap=wood_prayer_beads_bmp)
+        self.add_widget(wood_prayer_beads)
+
+        img = './images/shelf/birch_bark_necklace.png'
+        birch_bark_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        birch_bark_necklace = wx.StaticBitmap(self, id=0, pos=(800, 530),
+                                              bitmap=birch_bark_necklace_bmp)
+        self.add_widget(birch_bark_necklace)
+
+        img = './images/shelf/ceramic_necklace.png'
+        ceramic_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        ceramic_necklace = wx.StaticBitmap(self, id=0, pos=(935, 530),
+                                           bitmap=ceramic_necklace_bmp)
+        self.add_widget(ceramic_necklace)
+
+        img = './images/shelf/paper_necklace.png'
+        paper_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        paper_necklace = wx.StaticBitmap(self, id=0, pos=(935, 660),
+                                         bitmap=paper_necklace_bmp)
+        self.add_widget(paper_necklace)
+
+        img = './images/shelf/teeth_glass_necklace.png'
+        teeth_glass_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        teeth_glass_necklace = wx.StaticBitmap(self, id=0, pos=(435, 766),
+                                               bitmap=teeth_glass_necklace_bmp)
+        self.add_widget(teeth_glass_necklace)
+
+        img = './images/shelf/seed_shell_necklace.png'
+        seed_shell_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        seed_shell_necklace = wx.StaticBitmap(self, id=0, pos=(682, 770),
+                                              bitmap=seed_shell_necklace_bmp)
+        self.add_widget(seed_shell_necklace)
+
+        img = './images/shelf/seed_necklace.png'
+        seed_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        seed_necklace = wx.StaticBitmap(self, id=0, pos=(690, 890),
+                                        bitmap=seed_necklace_bmp)
+        self.add_widget(seed_necklace)
+
+        img = './images/shelf/snail_shell_necklace.png'
+        snail_shell_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
+        snail_shell_necklace = wx.StaticBitmap(self, id=0, pos=(936, 766),
+                                               bitmap=snail_shell_necklace_bmp)
+        self.add_widget(snail_shell_necklace)
+
         # Layout
         # main_sizer = wx.BoxSizer(wx.HORIZONTAL)
         # main_sizer.Add(background, 0, wx.EXPAND)
