@@ -7,7 +7,7 @@ class LabelViewerPanel(wx.Panel):
     keypress events.
     """
 
-    def __init__(self, parent, panel_id, panel_size):
+    def __init__(self, parent, image, panel_id, panel_size):
         wx.Panel.__init__(self, parent, id=panel_id, size=panel_size)
         self.frame = parent
         self.panel_id = panel_id
@@ -15,6 +15,9 @@ class LabelViewerPanel(wx.Panel):
         self.cursor = wx.StockCursor(wx.CURSOR_BLANK)
         self.BackgroundColour = wx.BLACK
         self.widgets = []
+        self.image = image
+        # self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
 
     def set_cursor(self):
         for widget in self.widgets:
@@ -25,16 +28,28 @@ class LabelViewerPanel(wx.Panel):
         if keycode == wx.WXK_ESCAPE:
             self.frame.close()
 
+    def draw_image(self, event):
+        """
+        Draws the image to the panel's background.
+        """
+        dc = event.GetDC()
+        if not dc:
+            dc = wx.ClientDC(self)
+            rect = self.GetUpdateRegion().GetBox()
+            dc.SetClippingRect(rect)
+        dc.Clear()
+        image = wx.Bitmap(self.image)
+        dc.DrawBitmap(image, 0, 0)
+        self.SetFocus()
+
 
 class MainPanel(LabelViewerPanel):
     """
     Main shelf panel. When touched/clicked each object opens a new ObjectPanel.
     """
 
-    def __init__(self, parent, panel_id, panel_size):
-        LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
-        # self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
-        self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
+    def __init__(self, parent, image, panel_id, panel_size):
+        LabelViewerPanel.__init__(self, parent, image, panel_id, panel_size)
 
         # Images
         self.add_image('./images/shelf/duiker_hoof_necklace.png', 0, (430, 50))
@@ -63,20 +78,6 @@ class MainPanel(LabelViewerPanel):
         self.set_cursor()
         self.SetFocus()
 
-    def draw_image(self, event):
-        """
-        Draws the image to the panel's background.
-        """
-        dc = event.GetDC()
-        if not dc:
-            dc = wx.ClientDC(self)
-            rect = self.GetUpdateRegion().GetBox()
-            dc.SetClippingRect(rect)
-        dc.Clear()
-        image = wx.Bitmap('./images/home.png')
-        dc.DrawBitmap(image, 0, 0)
-        self.SetFocus()
-
     def add_image(self, image_path, img_id, position):
         bmp = wx.Bitmap(image_path, wx.BITMAP_TYPE_PNG)
         widget = wx.StaticBitmap(self, id=img_id, pos=position, bitmap=bmp)
@@ -93,11 +94,11 @@ class ObjectPanel(LabelViewerPanel):
     the object.
     """
 
-    def __init__(self, parent, panel_id, panel_size):
-        LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
+    def __init__(self, parent, image, panel_id, panel_size):
+        LabelViewerPanel.__init__(self, parent, image, panel_id, panel_size)
 
         # Images
-        image = wx.Bitmap('./images/blue720.png', wx.BITMAP_TYPE_ANY)
+        image = wx.Bitmap(image, wx.BITMAP_TYPE_ANY)
         bitmap0 = wx.StaticBitmap(self, bitmap=image)
         self.add_widget(bitmap0)
         # TODO add more images here
@@ -128,8 +129,8 @@ class MainFrame(wx.Frame):
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
 
-        self.main_panel = MainPanel(self, -1, image_size)
-        object1_panel = ObjectPanel(self, 0, image_size)
+        self.main_panel = MainPanel(self, './images/shelf/background.png', -1, image_size)
+        object1_panel = ObjectPanel(self, './images/test/blue720.png', 0, image_size)
         object1_panel.Hide()
         # TODO add more panels here
 
