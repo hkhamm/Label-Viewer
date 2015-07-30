@@ -33,114 +33,27 @@ class MainPanel(LabelViewerPanel):
 
     def __init__(self, parent, panel_id, panel_size):
         LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
-	self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
-	self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
+        # self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
+        self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
 
-        # background_bmp = wx.Bitmap('./images/home.png', wx.BITMAP_TYPE_PNG)
-        # bg = wx.StaticBitmap(self, id=0, bitmap=background_bmp)
-
-        # Widgets
-        img = './images/shelf/duiker_hoof_necklace.png'
-        hoof_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        hoof_necklace = wx.StaticBitmap(self, id=0, pos=(430, 50),
-                                        bitmap=hoof_necklace_bmp)
-        self.add_widget(hoof_necklace)
-
-        img = './images/shelf/eggshell_necklace.png'
-        eggshell_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        eggshell_necklace = wx.StaticBitmap(self, id=0, pos=(936, 50),
-                                            bitmap=eggshell_necklace_bmp)
-        self.add_widget(eggshell_necklace)
-
-        img = './images/shelf/leather_leggings.png'
-        leather_leggings_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        leather_leggings = wx.StaticBitmap(self, id=0, pos=(690, 300),
-                                           bitmap=leather_leggings_bmp)
-        self.add_widget(leather_leggings)
-
-        img = './images/shelf/metal_pendant.png'
-        metal_pendant_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        metal_pendant = wx.StaticBitmap(self, id=0, pos=(690, 420),
-                                        bitmap=metal_pendant_bmp)
-        self.add_widget(metal_pendant)
-
-        img = './images/shelf/ainu_necklaces.png'
-        ainu_necklaces_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        ainu_necklaces = wx.StaticBitmap(self, id=0, pos=(936, 290),
-                                         bitmap=ainu_necklaces_bmp)
-        self.add_widget(ainu_necklaces)
-
-        img = './images/shelf/jade_necklace.png'
-        jade_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        jade_necklace = wx.StaticBitmap(self, id=0, pos=(450, 300),
-                                        bitmap=jade_necklace_bmp)
-        self.add_widget(jade_necklace)
-
-        img = './images/shelf/turquoise_necklace.png'
-        turquoise_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        turquoise_necklace = wx.StaticBitmap(self, id=0, pos=(530, 300),
-                                             bitmap=turquoise_necklace_bmp)
-        self.add_widget(turquoise_necklace)
-
-        img = './images/shelf/stone_necklace.png'
-        stone_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        stone_necklace = wx.StaticBitmap(self, id=0, pos=(430, 430),
-                                         bitmap=stone_necklace_bmp)
-        self.add_widget(stone_necklace)
-
-        img = './images/shelf/ivory_necklace.png'
-        ivory_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        ivory_necklace = wx.StaticBitmap(self, id=0, pos=(435, 530),
-                                         bitmap=ivory_necklace_bmp)
-        self.add_widget(ivory_necklace)
-
-        img = './images/shelf/wood_prayer_beads.png'
-        wood_prayer_beads_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        wood_prayer_beads = wx.StaticBitmap(self, id=0, pos=(670, 530),
-                                            bitmap=wood_prayer_beads_bmp)
-        self.add_widget(wood_prayer_beads)
-
-        img = './images/shelf/birch_bark_necklace.png'
-        birch_bark_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        birch_bark_necklace = wx.StaticBitmap(self, id=0, pos=(800, 530),
-                                              bitmap=birch_bark_necklace_bmp)
-        self.add_widget(birch_bark_necklace)
-
-        img = './images/shelf/ceramic_necklace.png'
-        ceramic_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        ceramic_necklace = wx.StaticBitmap(self, id=0, pos=(935, 530),
-                                           bitmap=ceramic_necklace_bmp)
-        self.add_widget(ceramic_necklace)
-
-        img = './images/shelf/paper_necklace.png'
-        paper_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        paper_necklace = wx.StaticBitmap(self, id=0, pos=(935, 660),
-                                         bitmap=paper_necklace_bmp)
-        self.add_widget(paper_necklace)
-
-        img = './images/shelf/teeth_glass_necklace.png'
-        teeth_glass_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        teeth_glass_necklace = wx.StaticBitmap(self, id=0, pos=(435, 766),
-                                               bitmap=teeth_glass_necklace_bmp)
-        self.add_widget(teeth_glass_necklace)
-
-        img = './images/shelf/seed_shell_necklace.png'
-        seed_shell_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        seed_shell_necklace = wx.StaticBitmap(self, id=0, pos=(682, 770),
-                                              bitmap=seed_shell_necklace_bmp)
-        self.add_widget(seed_shell_necklace)
-
-        img = './images/shelf/seed_necklace.png'
-        seed_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        seed_necklace = wx.StaticBitmap(self, id=0, pos=(690, 890),
-                                        bitmap=seed_necklace_bmp)
-        self.add_widget(seed_necklace)
-
-        img = './images/shelf/snail_shell_necklace.png'
-        snail_shell_necklace_bmp = wx.Bitmap(img, wx.BITMAP_TYPE_PNG)
-        snail_shell_necklace = wx.StaticBitmap(self, id=0, pos=(936, 766),
-                                               bitmap=snail_shell_necklace_bmp)
-        self.add_widget(snail_shell_necklace)
+        # Images
+        self.add_image('./images/shelf/duiker_hoof_necklace.png', 0, (430, 50))
+        self.add_image('./images/shelf/eggshell_necklace.png', 0, (936, 50))
+        self.add_image('./images/shelf/leather_leggings.png', 0, (690, 300))
+        self.add_image('./images/shelf/metal_pendant.png', 0, (690, 420))
+        self.add_image('./images/shelf/ainu_necklaces.png', 0, (936, 290))
+        self.add_image('./images/shelf/jade_necklace.png', 0, (450, 300))
+        self.add_image('./images/shelf/turquoise_necklace.png', 0, (530, 300))
+        self.add_image('./images/shelf/stone_necklace.png', 0, (430, 430))
+        self.add_image('./images/shelf/ivory_necklace.png', 0, (435, 530))
+        self.add_image('./images/shelf/wood_prayer_beads.png', 0, (670, 530))
+        self.add_image('./images/shelf/birch_bark_necklace.png', 0, (800, 530))
+        self.add_image('./images/shelf/ceramic_necklace.png', 0, (935, 530))
+        self.add_image('./images/shelf/paper_necklace.png', 0, (935, 660))
+        self.add_image('./images/shelf/teeth_glass_necklace.png', 0, (435, 766))
+        self.add_image('./images/shelf/seed_shell_necklace.png', 0, (682, 770))
+        self.add_image('./images/shelf/seed_necklace.png', 0, (690, 890))
+        self.add_image('./images/shelf/snail_shell_necklace.png', 0, (936, 766))
 
         # Layout
         # main_sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -151,20 +64,22 @@ class MainPanel(LabelViewerPanel):
         self.SetFocus()
 
     def draw_image(self, event):
-	"""
-	Draws the image to the panel's background.
-	"""
-	dc = event.GetDC()
-	if not dc:
-	    dc = wx.ClientDC(self)
-	    rect = self.GetUpdateRegion().GetBox()
+        """
+        Draws the image to the panel's background.
+        """
+        dc = event.GetDC()
+        if not dc:
+            dc = wx.ClientDC(self)
+            rect = self.GetUpdateRegion().GetBox()
             dc.SetClippingRect(rect)
         dc.Clear()
-	image = wx.Bitmap('./images/home.png')
+        image = wx.Bitmap('./images/home.png')
         dc.DrawBitmap(image, 0, 0)
-	self.SetFocus()
+        self.SetFocus()
 
-    def add_widget(self, widget):
+    def add_image(self, image_path, img_id, position):
+        bmp = wx.Bitmap(image_path, wx.BITMAP_TYPE_PNG)
+        widget = wx.StaticBitmap(self, id=img_id, pos=position, bitmap=bmp)
         widget.Bind(wx.EVT_LEFT_DOWN, self.switch_panel)
         self.widgets.append(widget)
 
@@ -181,16 +96,16 @@ class ObjectPanel(LabelViewerPanel):
     def __init__(self, parent, panel_id, panel_size):
         LabelViewerPanel.__init__(self, parent, panel_id, panel_size)
 
-        # Widgets
+        # Images
         image = wx.Bitmap('./images/blue720.png', wx.BITMAP_TYPE_ANY)
         bitmap0 = wx.StaticBitmap(self, bitmap=image)
         self.add_widget(bitmap0)
-        # TODO add more widgets here
+        # TODO add more images here
 
         # Layout
-        sizer = wx.BoxSizer(wx.HORIZONTAL)
-        sizer.Add(bitmap0, 0, wx.EXPAND)
-        self.SetSizer(sizer)
+        # sizer = wx.BoxSizer(wx.HORIZONTAL)
+        # sizer.Add(bitmap0, 0, wx.EXPAND)
+        # self.SetSizer(sizer)
 
         self.set_cursor()
 
