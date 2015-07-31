@@ -16,7 +16,7 @@ class LabelViewerPanel(wx.Panel):
         self.BackgroundColour = wx.BLACK
         self.widgets = []
         self.image = image
-        # self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
+        self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
 
     def set_cursor(self):
@@ -42,6 +42,9 @@ class LabelViewerPanel(wx.Panel):
         dc.DrawBitmap(image, 0, 0)
         self.SetFocus()
 
+    def switch_panel(self, event):
+        self.frame.switch_panel(self.panel_id, event.GetEventObject().GetId())
+
 
 class MainPanel(LabelViewerPanel):
     """
@@ -52,40 +55,33 @@ class MainPanel(LabelViewerPanel):
         LabelViewerPanel.__init__(self, parent, image, panel_id, panel_size)
 
         # Images
-        self.add_image('./images/shelf/duiker_hoof_necklace.png', 0, (430, 50))
-        self.add_image('./images/shelf/eggshell_necklace.png', 0, (936, 50))
-        self.add_image('./images/shelf/leather_leggings.png', 0, (690, 300))
-        self.add_image('./images/shelf/metal_pendant.png', 0, (690, 420))
-        self.add_image('./images/shelf/ainu_necklaces.png', 0, (936, 290))
-        self.add_image('./images/shelf/jade_necklace.png', 0, (450, 300))
-        self.add_image('./images/shelf/turquoise_necklace.png', 0, (530, 300))
-        self.add_image('./images/shelf/stone_necklace.png', 0, (430, 430))
-        self.add_image('./images/shelf/ivory_necklace.png', 0, (435, 530))
-        self.add_image('./images/shelf/wood_prayer_beads.png', 0, (670, 530))
-        self.add_image('./images/shelf/birch_bark_necklace.png', 0, (800, 530))
-        self.add_image('./images/shelf/ceramic_necklace.png', 0, (935, 530))
-        self.add_image('./images/shelf/paper_necklace.png', 0, (935, 660))
-        self.add_image('./images/shelf/teeth_glass_necklace.png', 0, (435, 766))
-        self.add_image('./images/shelf/seed_shell_necklace.png', 0, (682, 770))
-        self.add_image('./images/shelf/seed_necklace.png', 0, (690, 890))
-        self.add_image('./images/shelf/snail_shell_necklace.png', 0, (936, 766))
-
-        # Layout
-        # main_sizer = wx.BoxSizer(wx.HORIZONTAL)
-        # main_sizer.Add(bg, 0, wx.EXPAND)
-        # self.SetSizer(main_sizer)
+        self.add_image('duiker_hoof_necklace', 0, (430, 50))
+        self.add_image('eggshell_necklace', 1, (936, 50))
+        self.add_image('leather_leggings', 2, (690, 300))
+        self.add_image('metal_pendant', 3, (690, 420))
+        self.add_image('ainu_necklaces', 1, (936, 290))
+        self.add_image('jade_necklace', 5, (450, 300))
+        self.add_image('turquoise_necklace', 6, (530, 300))
+        self.add_image('stone_necklace', 7, (430, 430))
+        self.add_image('ivory_necklace', 8, (435, 530))
+        self.add_image('wood_prayer_beads', 9, (670, 530))
+        self.add_image('birch_bark_necklace', 10, (800, 530))
+        self.add_image('ceramic_necklace', 11, (935, 530))
+        self.add_image('paper_necklace', 12, (935, 660))
+        self.add_image('teeth_glass_necklace', 13, (435, 766))
+        self.add_image('seed_shell_necklace', 14, (682, 770))
+        self.add_image('seed_necklace', 15, (690, 890))
+        self.add_image('snail_shell_necklace', 16, (936, 766))
 
         self.set_cursor()
         self.SetFocus()
 
     def add_image(self, image_path, img_id, position):
+        image_path = './images/shelf/' + image_path + '.png'
         bmp = wx.Bitmap(image_path, wx.BITMAP_TYPE_PNG)
         widget = wx.StaticBitmap(self, id=img_id, pos=position, bitmap=bmp)
         widget.Bind(wx.EVT_LEFT_DOWN, self.switch_panel)
         self.widgets.append(widget)
-
-    def switch_panel(self, event):
-        self.frame.switch_panel(event.GetEventObject().GetId())
 
 
 class ObjectPanel(LabelViewerPanel):
@@ -97,26 +93,51 @@ class ObjectPanel(LabelViewerPanel):
     def __init__(self, parent, image, panel_id, panel_size):
         LabelViewerPanel.__init__(self, parent, image, panel_id, panel_size)
 
-        # Images
-        image = wx.Bitmap(image, wx.BITMAP_TYPE_ANY)
-        bitmap0 = wx.StaticBitmap(self, bitmap=image)
-        self.add_widget(bitmap0)
-        # TODO add more images here
-
-        # Layout
-        # sizer = wx.BoxSizer(wx.HORIZONTAL)
-        # sizer.Add(bitmap0, 0, wx.EXPAND)
-        # self.SetSizer(sizer)
-
-        self.set_cursor()
-
-    def add_widget(self, widget):
+    def add_button(self, image_path, img_id, position):
+        widget = self.add_image(image_path, img_id, position)
         widget.Bind(wx.EVT_LEFT_DOWN, self.switch_panel)
         self.widgets.append(widget)
 
-    def switch_panel(self, event):
-        event.Skip()
-        self.frame.switch_panel(self.panel_id)
+    def add_image(self, image_path, img_id, position):
+        image_path = './images/' + image_path
+        bmp = wx.Bitmap(image_path, wx.BITMAP_TYPE_PNG)
+        return wx.StaticBitmap(self, id=img_id, pos=position, bitmap=bmp)
+
+
+class LabelPanel(ObjectPanel):
+    """
+    A detailed object panel. Contains information and additional images about
+    the object.
+    """
+
+    def __init__(self, parent, background, images, buttons, panel_id, panel_size):
+        LabelViewerPanel.__init__(self, parent, background, panel_id, panel_size)
+
+        # Images
+        self.add_image(images[0], -1, (50, 50))
+        self.add_image(images[1], -1, (870, 650))
+        self.add_image(images[2], -1, (1525, 650))
+
+        # Buttons
+        self.add_button('buttons/zoom.png', buttons[0], (50, 950))
+        self.add_button('buttons/next.png', buttons[1], (250, 950))
+        self.add_button('buttons/home.png', 0, (450, 950))
+
+        self.set_cursor()
+
+
+class ZoomPanel(ObjectPanel):
+    """
+    A zoomed object panel.
+    """
+
+    def __init__(self, parent, image, panel_id, label_id, panel_size):
+        ObjectPanel.__init__(self, parent, image, panel_id, panel_size)
+
+        # Buttons
+        self.add_button('buttons/return.png', label_id, (50, 950))
+
+        self.set_cursor()
 
 
 class MainFrame(wx.Frame):
@@ -126,25 +147,40 @@ class MainFrame(wx.Frame):
 
     def __init__(self, parent, image_size):
         wx.Frame.__init__(self, parent, wx.ID_ANY, size=image_size)
+        self.size = image_size
         self.ShowFullScreen(True, style=wx.FULLSCREEN_ALL)
         self.BackgroundColour = wx.BLACK
+        self.panels = []
 
-        self.main_panel = MainPanel(self, './images/shelf/background.png', -1, image_size)
-        object1_panel = ObjectPanel(self, './images/test/blue720.png', 0, image_size)
-        object1_panel.Hide()
-        # TODO add more panels here
+        # Main
+        main_bg = './images/shelf/background.png'
+        main_panel = MainPanel(self, main_bg, 0, image_size)
+        self.panels.append(main_panel)
 
-        self.panels = [object1_panel]
+        # Ainu necklace
+        images = ['ainu_necklace/ainu_necklaces_s.png',
+                  'ainu_necklace/ainu_map.png',
+                  'ainu_necklace/ainu_woman.png']
+        buttons = [2, 5]
+        self.add_label_panel('ainu_necklace/background.png', images, buttons, 1)
+        self.add_zoom_panel('ainu_necklace/ainu_necklaces.png', 2, 1)
 
-    def switch_panel(self, index):
-        if self.main_panel.IsShown():
-            self.main_panel.Hide()
-            self.panels[index].Show()
-            self.panels[index].SetFocus()
-        else:
-            self.main_panel.Show()
-            self.panels[index].Hide()
-            self.main_panel.SetFocus()
+    def add_label_panel(self, background, images, buttons, panel_id):
+        bg = './images/' + background
+        panel = LabelPanel(self, bg, images, buttons, panel_id, self.size)
+        panel.Hide()
+        self.panels.append(panel)
+
+    def add_zoom_panel(self, image, panel_id, label_id):
+        background = './images/' + image
+        panel = ZoomPanel(self, background, panel_id, label_id, self.size)
+        panel.Hide()
+        self.panels.append(panel)
+
+    def switch_panel(self, src_id, dest_id):
+        self.panels[src_id].Hide()
+        self.panels[dest_id].Show()
+        self.panels[dest_id].SetFocus()
         self.Layout()
 
     def close(self):
