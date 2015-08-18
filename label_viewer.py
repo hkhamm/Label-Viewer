@@ -59,19 +59,19 @@ class MainPanel(LabelViewerPanel):
         self.add_image('glass', 1, (936, 290))
         self.add_image('paper', 3, (935, 665))
         self.add_image('seeds', 5, (720, 895))
-        self.add_image('ivory', 7, (435, 530))
-        self.add_image('snail_shell', 9, (936, 766))
-        self.add_image('silver_turquoise', 11, (737, 770))
-        self.add_image('birch_bark', 13, (800, 530))
-        self.add_image('ceramic', 15, (935, 530))
-        self.add_image('eggshell', 17, (936, 50))
-        self.add_image('duiker_hoof', 19, (430, 50))
-        self.add_image('glass_teeth', 21, (430, 290))
-        self.add_image('jade', 23, (470, 810))
-        self.add_image('leather', 25, (690, 300))
-        self.add_image('wood', 27, (670, 530))
-        self.add_image('metal', 29, (690, 420))
-        self.add_image('stone', 31, (540, 770))
+        self.add_image('snail_shell', 7, (936, 766))
+        self.add_image('silver_turquoise', 9, (737, 770))
+        self.add_image('birch_bark', 11, (800, 530))
+        self.add_image('ceramic', 13, (935, 530))
+        self.add_image('eggshell', 15, (936, 50))
+        self.add_image('duiker_hoof', 17, (430, 50))
+        self.add_image('glass_teeth', 19, (430, 290))
+        self.add_image('jade', 21, (470, 810))
+        self.add_image('leather', 23, (690, 300))
+        self.add_image('wood', 25, (670, 530))
+        self.add_image('metal', 27, (690, 420))
+        self.add_image('stone', 29, (540, 770))
+        self.add_image('ivory', 31, (435, 530))
 
         self.set_cursor()
         self.SetFocus()
@@ -111,7 +111,7 @@ class LabelPanel(ObjectPanel):
     """
 
     def __init__(self, parent, background, buttons, panel_id, panel_size):
-        LabelViewerPanel.__init__(self, parent, background, panel_id, panel_size)
+        ObjectPanel.__init__(self, parent, background, panel_id, panel_size)
 
         # Images
         # self.add_image(images[0][0], -1, images[0][1])
@@ -140,6 +140,33 @@ class ZoomPanel(ObjectPanel):
         self.set_cursor()
 
 
+class IvoryPanel(ObjectPanel):
+    """
+    A detailed object panel with additional image button. Contains information and additional images about
+    the object.
+    """
+
+    def __init__(self, parent, background, buttons, images, panel_id, panel_size):
+        ObjectPanel.__init__(self, parent, background, panel_id, panel_size)
+
+        # Images
+        self.add_image_button(images[0][0], buttons[2], images[0][1])
+
+        # Buttons
+        self.add_button('buttons/zoom.png', buttons[0], (50, 950))
+        self.add_button('buttons/next.png', buttons[1], (250, 950))
+        self.add_button('buttons/home.png', 0, (450, 950))
+
+        self.set_cursor()
+
+    def add_image_button(self, image_path, img_id, position):
+        image_path = './images/' + image_path
+        bmp = wx.Bitmap(image_path, wx.BITMAP_TYPE_PNG)
+        widget = wx.StaticBitmap(self, id=img_id, pos=position, bitmap=bmp)
+        widget.Bind(wx.EVT_LEFT_DOWN, self.switch_panel)
+        self.widgets.append(widget)
+
+
 class MainFrame(wx.Frame):
     """
     Main panel frame. Switches between panels.
@@ -163,84 +190,96 @@ class MainFrame(wx.Frame):
         # self.add_zoom_panel('folder/large_image.png', <zoom panel id>, <panel id>)
 
         # 1,2 - glass
-        buttons = [2, 999]
+        buttons = [2, 31]
         self.add_label_panel('glass/background.png', buttons, 1)
         self.add_zoom_panel('glass/glass.png', 2, 1)
 
         # 3,4 - paper
-        buttons = [4, 999]
+        buttons = [4, 21]
         self.add_label_panel('paper/background.png', buttons, 3)
         self.add_zoom_panel('paper/paper.png', 4, 3)
 
         # 5,6 - seeds
-        buttons = [6, 999]
+        buttons = [6, 7]
         self.add_label_panel('seeds/background.png', buttons, 5)
         self.add_zoom_panel('seeds/seeds.png', 6, 5)
 
-        # 7,8 - ivory
-        buttons = [8, 999]
-        self.add_label_panel('ivory/background01.png', buttons, 7)
-        self.add_zoom_panel('ivory/ivory.png', 8, 7)
+        # 7,8 - snail shell
+        buttons = [8, 17]
+        self.add_label_panel('snail_shell/background.png', buttons, 7)
+        self.add_zoom_panel('snail_shell/snail_shell.png', 8, 7)
 
-        # 9,10 - snail shell
-        buttons = [10, 999]
-        self.add_label_panel('snail_shell/background.png', buttons, 9)
-        self.add_zoom_panel('snail_shell/snail_shell.png', 10, 9)
+        # 9,10 - silver and turquoise
+        buttons = [10, 5]
+        self.add_label_panel('silver_turquoise/background.png', buttons, 9)
+        self.add_zoom_panel('silver_turquoise/silver_turquoise.png', 10, 9)
 
-        # 11,12 - silver and turquoise
-        buttons = [12, 999]
-        self.add_label_panel('silver_turquoise/background.png', buttons, 11)
-        self.add_zoom_panel('silver_turquoise/silver_turquoise.png', 12, 11)
+        # 11, 12 - birch bark
+        buttons = [12, 13]
+        self.add_label_panel('birch_bark/background.png', buttons, 11)
+        self.add_zoom_panel('birch_bark/birch_bark.png', 12, 11)
 
-        # 13, 14 - birch bark
-        buttons = [14, 999]
-        self.add_label_panel('birch_bark/background.png', buttons, 13)
-        self.add_zoom_panel('birch_bark/birch_bark.png', 14, 13)
+        # 13, 14 - ceramic
+        buttons = [14, 3]
+        self.add_label_panel('ceramic/background.png', buttons, 13)
+        self.add_zoom_panel('ceramic/ceramic.png', 14, 13)
 
-        # 15, 16 - ceramic
-        buttons = [16, 999]
-        self.add_label_panel('ceramic/background.png', buttons, 15)
-        self.add_zoom_panel('ceramic/ceramic.png', 16, 15)
+        # 15, 16 - eggshell
+        buttons = [16, 19]
+        self.add_label_panel('eggshell/background.png', buttons, 15)
+        self.add_zoom_panel('eggshell/eggshell.png', 16, 15)
 
-        # 17, 18 - eggshell
-        buttons = [18, 999]
-        self.add_label_panel('eggshell/background.png', buttons, 17)
-        self.add_zoom_panel('eggshell/eggshell.png', 18, 17)
+        # 17, 18 - duiker hoof
+        buttons = [18, 15]
+        self.add_label_panel('duiker_hoof/background.png', buttons, 17)
+        self.add_zoom_panel('duiker_hoof/duiker_hoof.png', 18, 17)
 
-        # 19, 20 - duiker hoof
-        buttons = [20, 999]
-        self.add_label_panel('duiker_hoof/background.png', buttons, 19)
-        self.add_zoom_panel('duiker_hoof/duiker_hoof.png', 20, 19)
+        # 19, 20 - glass and teeth
+        buttons = [20, 23]
+        self.add_label_panel('glass_teeth/background.png', buttons, 19)
+        self.add_zoom_panel('glass_teeth/glass_teeth.png', 20, 19)
 
-        # 21, 22 - glass and teeth
-        buttons = [22, 999]
-        self.add_label_panel('glass_teeth/background.png', buttons, 21)
-        self.add_zoom_panel('glass_teeth/glass_teeth.png', 22, 21)
+        # 21, 22 - jade
+        buttons = [2, 29]
+        self.add_label_panel('jade/background.png', buttons, 21)
+        self.add_zoom_panel('jade/jade.png', 22, 21)
 
-        # 23, 24 - jade
-        buttons = [24, 999]
-        self.add_label_panel('jade/background.png', buttons, 23)
-        self.add_zoom_panel('jade/jade.png', 24, 23)
+        # 23, 24 - leather
+        buttons = [24, 27]
+        self.add_label_panel('leather/background.png', buttons, 23)
+        self.add_zoom_panel('leather/leather.png', 24, 23)
 
-        # 25, 26 - leather
-        buttons = [26, 999]
-        self.add_label_panel('leather/background.png', buttons, 25)
-        self.add_zoom_panel('leather/leather.png', 26, 25)
+        # 25, 26 - wood
+        buttons = [26, 11]
+        self.add_label_panel('wood/background.png', buttons, 25)
+        self.add_zoom_panel('wood/wood.png', 26, 25)
 
-        # 27, 28 - wood
-        buttons = [28, 999]
-        self.add_label_panel('wood/background.png', buttons, 27)
-        self.add_zoom_panel('wood/wood.png', 28, 27)
+        # 27, 28 - metal
+        buttons = [28, 1]
+        self.add_label_panel('metal/background.png', buttons, 27)
+        self.add_zoom_panel('metal/metal.png', 28, 27)
 
-        # 29, 30 - metal
-        buttons = [30, 999]
-        self.add_label_panel('metal/background.png', buttons, 29)
-        self.add_zoom_panel('metal/metal.png', 30, 29)
+        # 29, 30 - stone
+        buttons = [30, 9]
+        self.add_label_panel('stone/background.png', buttons, 29)
+        self.add_zoom_panel('stone/stone.png', 30, 29)
 
-        # 31, 32 - stone
-        buttons = [32, 999]
-        self.add_label_panel('stone/background.png', buttons, 31)
-        self.add_zoom_panel('stone/stone.png', 32, 31)
+        # 31,32 - ivory_1
+        images = [['ivory/walrus.png', (868, 629)]]
+        buttons = [32, 25, 33]  # [zoom_panel_id, next_panel_id, panel_2_id]
+        self.add_ivory_panel('ivory/background01.png', buttons, images, 31)
+        self.add_zoom_panel('ivory/ivory.png', 32, 31)
+
+        # 33,34 - ivory_2
+        buttons = [34, 25]
+        self.add_label_panel('ivory/background02.png', buttons, 33)
+        self.add_zoom_panel('ivory/ivory.png', 34, 33)
+
+    def add_ivory_panel(self, background, buttons, images, panel_id):
+        bg = './images/' + background
+        panel = IvoryPanel(self, bg, buttons, images, panel_id, self.size)
+        panel.Hide()
+        self.panels.append(panel)
 
     def add_label_panel(self, background, buttons, panel_id):
         bg = './images/' + background
