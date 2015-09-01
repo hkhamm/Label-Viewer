@@ -16,11 +16,11 @@ class LabelViewerPanel(wx.Panel):
         self.BackgroundColour = wx.BLACK
         self.widgets = []
         self.image = image
-        # Uncomment the follow line on wxpython 2.x
+        # Uncomment the following line on wxpython 2.x
         # self.SetBackgroundStyle(wx.BG_STYLE_CUSTOM)
         self.Bind(wx.EVT_ERASE_BACKGROUND, self.draw_image)
 
-    def set_cursor(self):
+    def hide_cursor(self):
         for widget in self.widgets:
             widget.SetCursor(self.cursor)
 
@@ -56,13 +56,12 @@ class LabelViewerPanel(wx.Panel):
 
 class MainPanel(LabelViewerPanel):
     """
-    Main shelf panel. When touched/clicked each object opens a new ObjectPanel.
+    Main shelf panel. When touched/clicked each object opens a new panel.
     """
 
     def __init__(self, parent, image, name, panel_size):
         LabelViewerPanel.__init__(self, parent, image, name, panel_size)
 
-        # Images
         self.add_button('shelf/glass.png', 'glass', (936, 290))
         self.add_button('shelf/paper.png', 'paper', (935, 665))
         self.add_button('shelf/seeds.png', 'seeds', (720, 895))
@@ -80,7 +79,7 @@ class MainPanel(LabelViewerPanel):
         self.add_button('shelf/stone.png', 'stone', (540, 770))
         self.add_button('shelf/ivory.png', 'ivory', (435, 530))
 
-        self.set_cursor()
+        self.hide_cursor()
         self.SetFocus()
 
 
@@ -98,13 +97,13 @@ class LabelPanel(LabelViewerPanel):
         self.add_button('buttons/next.png', next_panel, (250, 950))
         self.add_button('buttons/home.png', 'main', (450, 950))
 
-        self.set_cursor()
+        self.hide_cursor()
 
 
 class IvoryPanel(LabelViewerPanel):
     """
-    A detailed object panel with additional image button. Contains information and additional images about
-    the object.
+    An unique panel for the ivory necklace with additional image button. Contains information and additional images
+    about the object.
     """
 
     def __init__(self, parent, background, images, name, next_panel, img_dest, panel_size):
@@ -118,7 +117,7 @@ class IvoryPanel(LabelViewerPanel):
         self.add_button('buttons/next.png', next_panel, (250, 950))
         self.add_button('buttons/home.png', 'main', (450, 950))
 
-        self.set_cursor()
+        self.hide_cursor()
 
 
 class ZoomPanel(LabelViewerPanel):
@@ -132,7 +131,7 @@ class ZoomPanel(LabelViewerPanel):
         # Buttons
         self.add_button('buttons/return.png', src_name, (50, 950))
 
-        self.set_cursor()
+        self.hide_cursor()
 
 
 class MainFrame(wx.Frame):
@@ -157,6 +156,12 @@ class MainFrame(wx.Frame):
         self.add_panel('leather', 'metal')
         self.add_panel('metal', 'glass')
         self.add_panel('glass', 'ivory')
+
+        images = [['ivory1/walrus.png', (868, 629)]]
+        self.add_ivory_panel('ivory1/background.png', images, 'ivory', 'wood', 'ivory2')
+        self.add_zoom_panel('ivory1/ivory.png', 'ivory_zoom', 'ivory')
+
+        self.add_panel('ivory2', 'wood')
         self.add_panel('wood', 'birch_bark')
         self.add_panel('birch_bark', 'ceramic')
         self.add_panel('ceramic', 'paper')
@@ -167,12 +172,12 @@ class MainFrame(wx.Frame):
         self.add_panel('seeds', 'snail_shell')
         self.add_panel('snail_shell', 'duiker_hoof')
 
-        images = [['ivory/walrus.png', (868, 629)]]
-        self.add_ivory_panel('ivory/background01.png', images, 'ivory', 'wood', 'ivory_2')
-        self.add_zoom_panel('ivory/ivory.png', 'ivory_zoom', 'ivory')
-
-        self.add_label_panel('ivory/background02.png', 'ivory_2', 'wood')
-        self.add_zoom_panel('ivory/ivory.png', 'ivory_2_zoom', 'ivory_2')
+        # Timer to switch back to main shelf
+        self.timeout = 600000  # 10 min
+        self.timeout_timer = wx.Timer(self, wx.ID_ANY)
+        self.start_timeout_timer()
+        
+        self.current_panel = 'main'
 
     def add_panel(self, name, next_panel):
         self.add_label_panel(name + '/background.png', name, next_panel)
@@ -201,7 +206,20 @@ class MainFrame(wx.Frame):
         self.panel_dict[src_id].Hide()
         self.panel_dict[dest_id].Show()
         self.panel_dict[dest_id].SetFocus()
+        self.current_panel = dest_id
         self.Layout()
+
+    def start_timeout_timer(self):
+        self.Bind(wx.EVT_TIMER, self.switch_on_timeout, self.timeout_timer)
+        self.timeout_timer.Start(self.timeout)
+
+    def restart_timeout_timer(self):
+        self.timeout_timer.Stop()
+        self.start_timeout_timer()
+
+    def switch_on_timeout(self, event):
+        self.switch_panel(self.current_panel, 'main')
+        self.restart_timeout_timer()
 
     def close(self):
         self.Destroy()
