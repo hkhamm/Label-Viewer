@@ -176,7 +176,7 @@ class MainFrame(wx.Frame):
         self.timeout = 600000  # 10 min
         self.timeout_timer = wx.Timer(self, wx.ID_ANY)
         self.start_timeout_timer()
-        
+
         self.current_panel = 'main'
 
     def add_panel(self, name, next_panel):
@@ -208,6 +208,7 @@ class MainFrame(wx.Frame):
         self.panel_dict[dest_id].SetFocus()
         self.current_panel = dest_id
         self.Layout()
+        self.restart_timeout_timer()
 
     def start_timeout_timer(self):
         self.Bind(wx.EVT_TIMER, self.switch_on_timeout, self.timeout_timer)
